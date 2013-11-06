@@ -1,0 +1,41 @@
+\documentclass[mode=present,paper=a4paper,display=slides,style=paintings]{powerdot}
+
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{url}
+\usepackage{pst-all}      % PSTricks
+
+% comandos propios
+
+\lstnewenvironment{codigo}[1][]{%
+  \lstset{language=Java,basicstyle=\footnotesize\ttfamily,columns=flexible,%
+    frame=single,backgroundcolor=\color{yellow!20},keywordstyle=\bfseries,%
+    xleftmargin=\fboxsep,xrightmargin=\fboxsep,gobble=1, showstringspaces=false%
+    }\lstset{#1}}{}
+
+\pdsetup{
+  lf=Jakarta-Commons,
+  rf=Pag \arabic{slide}~/~\pageref*{lastslide},
+  palette=MayThird,
+}
+
+\title{EIP con Apache Camel y Spring Integration}
+\author{1ra parte}
+\date{5 de november de 2013}
+
+\begin{document}
+
+%\newcounter{parte}
+%\renewcommand{\theparte} {\arabic{parte}}
+%\newcommand{\nuevaparte}{\setcounter{parte}{0} \otraparte}
+%\newcommand{\otraparte}{\stepcounter{parte}(\theparte)}
+
+\section[slide=false]{Introducción}
+
+\maketitle
+\begin{slide}{Introducción}
+\end{slide}
+
+\end{document}
