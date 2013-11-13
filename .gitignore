@@ -1,9 +1,8 @@
-/Beamer examples/*.toc
-/Beamer examples/*.aux
-/Beamer examples/*.nav
-/Beamer examples/*.out
-/Beamer examples/*.snm
-/Beamer examples/*.gz
-
-/Beamer examples/*.pdf
-/*.toc
+*.toc
+*.aux
+*.nav
+*.out
+*.snm
+*.gz
+*.pdf
+*.vrb
