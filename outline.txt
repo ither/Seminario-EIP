@@ -1,0 +1,7 @@
+sp-int-01.graphml             Primera aproximacion al envio
+snipet01.java                 Codigo java para enviar 
+sp-int-02.grapml              Primera aprox a la recepcion
+sp-int-03.grapml              a donde va lo que se recibe?
+sp-int-04.grapml              al aggregator pero hay que unir los canales
+sp-int-05.grapml              Se usa publish-suscribe pero no se pueden unir dos canales
+sp-int-06.grapml              bridge
