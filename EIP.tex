@@ -1,7 +1,6 @@
 % !TeX spellcheck = es_AR
 \documentclass{beamer}
 
-\usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
@@ -19,7 +18,6 @@
 \date[Despegar]{Junio 2014}
 
 \begin{document}
-\lstloadlanguages{Java,XML}
 \begin{frame}
 \titlepage
 \end{frame}
@@ -58,7 +56,7 @@ Problemas de integración al escribir una aplicación
 \section{Ejemplos}
 \subsection{mailSender}
 \begin{frame}[fragile]{Controller}
-\begin{Verbatim}[commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 \PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
 \PY{o}{\PYZob{}}
     \PY{o}{.}\PY{o}{.}\PY{o}{.}
@@ -84,7 +82,7 @@ Problemas de integración al escribir una aplicación
 \end{frame}
 
 \begin{frame}[fragile]{XML (1)}
-\begin{Verbatim}[commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
     \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 
     \PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}sendChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
