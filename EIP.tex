@@ -1,6 +1,6 @@
 % !TeX spellcheck = es_AR
 \documentclass{beamer}
-\usepackage{lmodern}
+
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -28,17 +28,17 @@
 \end{frame}
 
 \section{Introducción}
-\subsection{El problema}
+\subsection{La motivación}
 \begin{frame}{Integración de sistemas}
 ¿A qué llamamos integración de sistemas?
 \end{frame}
 
-\begin{frame}{El problema}
+\begin{frame}{La motivación}
 Problemas de integración al escribir una aplicación
 \begin{itemize}[<+->]
 \item Distintas aproximaciones por programador
-\item Cambios constantes y deuda técnica
 \item La experiencia de Ant
+\item Cambios constantes y deuda técnica
 \end{itemize}
 \end{frame}
 
@@ -57,22 +57,22 @@ Problemas de integración al escribir una aplicación
 \section{Ejemplos}
 \subsection{mailSender}
 \begin{frame}[fragile]{Controller}
-\lstset{language=Java, basicstyle=\tiny, stringstyle=\bfseries}
+\lstset{language=Java, basicstyle=\ttfamily\tiny}
 \begin{lstlisting}
 public class MailSenderController
 {
-    ...
+    //...
     private final MessagingTemplate template = new MessagingTemplate();
 
     @Autowired
     MessageChannel sendChannel;
-    ...
+    //...
     
     private long processRequest(MailRequest req)
     {
       // Arma el mail
       final MimeMessage mimeMessage = mailSender.createMimeMessage();
-      ...
+      //...
       Message<MimeMessage> mailMessage = MessageBuilder.withPayload(mimeMessage)
               .setHeader(MailCheckerHeaders.REQUEST_ID, reqId)
               .setHeader(MailCheckerHeaders.MATCH_TYPE, "sent")
@@ -84,7 +84,7 @@ public class MailSenderController
 \end{frame}
 
 \begin{frame}[fragile]{XML (1)}
-\lstset{language=XML,  basicstyle=\tiny, stringstyle=\bfseries}
+\lstset{language=XML,  basicstyle=\tiny}
 \begin{lstlisting}
     <int:channel id="requestChannel" />
 
