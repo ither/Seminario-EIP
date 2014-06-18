@@ -1,10 +1,12 @@
-% !TeX spellcheck = es_AR
+% !TeX spellcheck = en_GB
 \documentclass{beamer}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \include{pygments}
+
+\hypersetup{colorlinks=true,urlcolor=cyan,linkbordercolor=red,pdfborderstyle={/S/U/W 1}}
 
 \mode<presentation>
 {
@@ -20,10 +22,6 @@
 \begin{document}
 \begin{frame}
 \titlepage
-\end{frame}
-
-\begin{frame}{Esquema}
-  \tableofcontents
 \end{frame}
 
 \section{Introducción}
@@ -104,15 +102,23 @@ agosto 2004
 % no es la panacea
 % preambulo ejemplo: endpoint, channel, message
 % ejemplo mail sender
+% channel adapters destacados
 % casos especiales: excepciones, transacciones
 % endpoints y/o canales interesantes para destacar (jdbc inbound ch adapter, jpa outbound gateway, etc)
 % subscriptions api v3
 % wiretap, gateway con java
 % conclusiones: no es necesario usar una implementacion, se trata de aprender el lenguaje comun
 
-
-%\section{Introduction}
-%\subsection[Short First Subsection Name]{First Subsection Name}
-%\begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
-%\end{frame}
+\begin{frame}{Referencias}
+\begin{center}
+Sitios \\
+\href{http://www.eaipatterns.com/}{Enterprise Integration Patterns} \\
+\href{http://camel.apache.org/}{Apache Camel} \\
+\href{http://projects.spring.io/spring-integration/}{Spring Integration} \\
+Libros \\
+\href{https://www.dropbox.com/s/gwa5p1edxpgudcz/Manning.Spring.Integration.in.Action.Sep.2012.pdf}{Spring Integration In Action, Manning 2012}  \\
+\href{https://www.dropbox.com/s/zd9uft4ygbclehn/Addison.Wesley.Enterprise.Integration.Patterns.pdf}{Enterprise Integration Patterns, Addison Wesley 2004} \\
+\href{https://www.dropbox.com/s/gjfegd85cvih78a/Manning.Camel.in.Action.Dec.2010.pdf}{Apache Camel In Action, Manning 2011}
+\end{center}
+\end{frame}
 \end{document}
