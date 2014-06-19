@@ -1,0 +1,24 @@
+<int:channel id="requestChannel" />
+<int-mail:outbound-channel-adapter channel="requestChannel" mail-sender="customMailSender"/>
+
+<bean id="customMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+...
+</bean>
+
+<int:channel id="receiveChannel" />
+<int-mail:inbound-channel-adapter id="aolAdapter"
+    store-uri="pop3://desp_test2%40aol.com:desp123@pop.aol.com/INBOX"
+    java-mail-properties="otrosProperties"
+    channel="receiveChannel"
+    should-delete-messages="true"
+    auto-startup="false">
+    <int:poller max-messages-per-poll="5" fixed-rate="${pollers.aol.rate}"/> 
+</int-mail:inbound-channel-adapter>
+
+<util:properties id="otrosProperties">
+    <prop key="mail.pop3.socketFactory.fallback">false</prop>
+    <prop key="mail.pop3.port">995</prop>
+    <prop key="mail.pop3.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+    <prop key="mail.pop3.socketFactory.port">995</prop>
+    <prop key="mail.debug">false</prop>
+</util:properties>

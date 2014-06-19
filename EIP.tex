@@ -185,7 +185,7 @@ agosto 2004
 \PY{n+nt}{\PYZlt{}int:bridge} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 
 \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
-\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{.}\PY{n+nt}{.}\PY{n+nt}{.} \PY{n+nt}{/\PYZgt{}}
 \end{Verbatim}
 
 \end{frame}
@@ -199,6 +199,41 @@ Definiciones para el aggregator
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Diseño (4) - Aggregator XML}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} 
+                \PY{n+na}{ref=}\PY{l+s}{\PYZdq{}mailAggregator\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}mailAggregator\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}com.despegar.mailsender.MailSenderAggregator\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño (4) - Aggregator Java}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderAggregator} \PY{o}{\PYZob{}}
+  \PY{o}{.}\PY{o}{.}\PY{o}{.}
+
+  \PY{n+nd}{@CorrelationStrategy}
+  \PY{k+kd}{public} \PY{n}{String} \PY{n+nf}{correlateBy}\PY{o}{(}\PY{n}{MimeMessage} \PY{n}{item}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+
+  \PY{n+nd}{@ReleaseStrategy}
+  \PY{k+kd}{public} \PY{k+kt}{boolean} \PY{n+nf}{releaseChecker}\PY{o}{(}\PY{n}{List}\PY{o}{\PYZlt{}}\PY{n}{Message}\PY{o}{\PYZlt{}}\PY{o}{?}\PY{o}{\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{messages}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+
+  \PY{n+nd}{@Aggregator}
+  \PY{k+kd}{public} \PY{n}{Object} \PY{n+nf}{aggregatingMethod}\PY{o}{(}\PY{n}{List}\PY{o}{\PYZlt{}}\PY{n}{Message}\PY{o}{\PYZlt{}}\PY{o}{?}\PY{o}{\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{messages}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Interlude}
+\end{frame}
 
 \subsection{Subscriptions API v3}
 \begin{frame}{agregar alerta}
@@ -224,16 +259,24 @@ Definiciones para el aggregator
 \section{Cierre}
 \subsection{Palabras finales}
 
+\begin{frame}{Conclusiones}
+\begin{itemize}
+\item Los patrones ayudan a tener un lenguaje en común
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Referencias}
 \begin{center}
-Sitios \\
+Sitios de referencia\\
 \href{http://www.eaipatterns.com/}{Enterprise Integration Patterns} \\
 \href{http://camel.apache.org/}{Apache Camel} \\
 \href{http://projects.spring.io/spring-integration/}{Spring Integration} \\
 Libros \\
 \href{https://www.dropbox.com/s/gwa5p1edxpgudcz/Manning.Spring.Integration.in.Action.Sep.2012.pdf}{Spring Integration In Action, Manning 2012}  \\
 \href{https://www.dropbox.com/s/zd9uft4ygbclehn/Addison.Wesley.Enterprise.Integration.Patterns.pdf}{Enterprise Integration Patterns, Addison Wesley 2004} \\
-\href{https://www.dropbox.com/s/gjfegd85cvih78a/Manning.Camel.in.Action.Dec.2010.pdf}{Apache Camel In Action, Manning 2011}
+\href{https://www.dropbox.com/s/gjfegd85cvih78a/Manning.Camel.in.Action.Dec.2010.pdf}{Apache Camel In Action, Manning 2011} \\
+Proyectos \\
+\href{http://gitlab.despegar.it/mail-checker/mail-checker}{mailSender en GitLab}
 \end{center}
 \end{frame}
 \end{document}

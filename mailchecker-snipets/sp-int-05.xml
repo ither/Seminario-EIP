@@ -1,0 +1,5 @@
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" output-channel="matchedChannel" 
+                ref="mailAggregator" />
+
+<bean id="mailAggregator" class="com.despegar.mailsender.MailSenderAggregator" />

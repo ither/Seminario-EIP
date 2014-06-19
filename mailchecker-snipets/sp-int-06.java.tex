@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderAggregator} \PY{o}{\PYZob{}}
+  \PY{o}{.}\PY{o}{.}\PY{o}{.}
+
+  \PY{n+nd}{@CorrelationStrategy}
+  \PY{k+kd}{public} \PY{n}{String} \PY{n+nf}{correlateBy}\PY{o}{(}\PY{n}{MimeMessage} \PY{n}{item}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+
+  \PY{n+nd}{@ReleaseStrategy}
+  \PY{k+kd}{public} \PY{k+kt}{boolean} \PY{n+nf}{releaseChecker}\PY{o}{(}\PY{n}{List}\PY{o}{\PYZlt{}}\PY{n}{Message}\PY{o}{\PYZlt{}}\PY{o}{?}\PY{o}{\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{messages}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+
+  \PY{n+nd}{@Aggregator}
+  \PY{k+kd}{public} \PY{n}{Object} \PY{n+nf}{aggregatingMethod}\PY{o}{(}\PY{n}{List}\PY{o}{\PYZlt{}}\PY{n}{Message}\PY{o}{\PYZlt{}}\PY{o}{?}\PY{o}{\PYZgt{}}\PY{o}{\PYZgt{}} \PY{n}{messages}\PY{o}{)} \PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+  \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}

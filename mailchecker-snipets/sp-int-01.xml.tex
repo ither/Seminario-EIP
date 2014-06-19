@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} 
+      \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}} \PY{n+na}{autowire\PYZhy{}candidate=}\PY{l+s}{\PYZdq{}false\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}defaultEncoding\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}UTF\PYZhy{}8\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}javaMailProperties\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}props}\PY{n+nt}{\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.transport.protocol\PYZdq{}}\PY{n+nt}{\PYZgt{}}smtp\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.smtp.auth\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.from\PYZdq{}}\PY{n+nt}{\PYZgt{}}bounces@despegar.com\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.debug\PYZdq{}}\PY{n+nt}{\PYZgt{}}true\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}/props\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/property\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+\end{Verbatim}

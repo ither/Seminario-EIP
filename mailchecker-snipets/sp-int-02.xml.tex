@@ -1,0 +1,26 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+...
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{java\PYZhy{}mail\PYZhy{}properties=}\PY{l+s}{\PYZdq{}otrosProperties\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}}
+    \PY{n+na}{should\PYZhy{}delete\PYZhy{}messages=}\PY{l+s}{\PYZdq{}true\PYZdq{}}
+    \PY{n+na}{auto\PYZhy{}startup=}\PY{l+s}{\PYZdq{}false\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:poller} \PY{n+na}{max\PYZhy{}messages\PYZhy{}per\PYZhy{}poll=}\PY{l+s}{\PYZdq{}5\PYZdq{}} \PY{n+na}{fixed\PYZhy{}rate=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.aol.rate\PYZcb{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}} 
+\PY{n+nt}{\PYZlt{}/int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}util:properties} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}otrosProperties\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.fallback\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.port\PYZdq{}}\PY{n+nt}{\PYZgt{}}995\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.class\PYZdq{}}\PY{n+nt}{\PYZgt{}}javax.net.ssl.SSLSocketFactory\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.port\PYZdq{}}\PY{n+nt}{\PYZgt{}}995\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.debug\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/util:properties\PYZgt{}}
+\end{Verbatim}

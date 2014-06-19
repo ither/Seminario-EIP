@@ -1,0 +1,5 @@
+<int:publish-subscribe-channel id="requestChannel" />
+<int-mail:outbound-channel-adapter channel="requestChannel" mail-sender="customMailSender" />
+
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" ... />

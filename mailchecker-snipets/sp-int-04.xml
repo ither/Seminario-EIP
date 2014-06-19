@@ -1,0 +1,16 @@
+<int:publish-subscribe-channel id="requestChannel" />
+<int-mail:outbound-channel-adapter channel="requestChannel" mail-sender="customMailSender" />
+
+<bean id="customMailSender" class="o.s.mail.javamail.JavaMailSenderImpl">
+...
+</bean> 
+
+<int-mail:inbound-channel-adapter id="aolAdapter"
+    store-uri="pop3://desp_test2%40aol.com:desp123@pop.aol.com/INBOX"
+    channel="aggregatorChannel" ... />
+
+<int:bridge input-channel="requestChannel" output-channel="aggregatorChannel" />
+
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" output-channel="matchedChannel" 
+ ... />
