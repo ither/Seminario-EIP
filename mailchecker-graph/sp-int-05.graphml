@@ -127,7 +127,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n3" target="n4">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="45.0" sy="0.0" tx="-45.0" ty="0.0"/>
@@ -138,7 +137,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e2" source="n0" target="n5">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="55.0" sy="0.0" tx="-45.0" ty="0.0"/>
@@ -149,7 +147,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e3" source="n5" target="n1">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="45.0" sy="4.0" tx="-45.0" ty="4.0"/>
@@ -160,14 +157,13 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n5" target="n3">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="44.98534065268859" sy="-21.119255192950845" tx="-44.968095379568354" ty="21.03996133260756">
             <y:Point x="677.0" y="516.2704273467317"/>
             <y:Point x="677.0" y="402.4296438722901"/>
           </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>

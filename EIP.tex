@@ -1,4 +1,4 @@
-% !TeX spellcheck = en_GB
+% !TeX spellcheck = en_US
 \documentclass{beamer}
 
 \usepackage[T1]{fontenc}
@@ -54,8 +54,17 @@ agosto 2004
 \includegraphics[width= 0.9\linewidth]{camel-spring}
 \end{frame}
 
+\begin{frame}{Componentes centrales}
+\includegraphics[width=1.0\linewidth]{MessageEndpointSolution}
+\end{frame}
+
 \section{Ejemplos}
 \subsection{mailSender}
+
+\begin{frame}{Diseño (1) - Outbound channel adapter}
+\includegraphics[width=1.0\linewidth]{sp-int-01}
+\end{frame}
+
 \begin{frame}[fragile]{Controller}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 \PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
@@ -73,8 +82,6 @@ agosto 2004
       \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
       \PY{o}{.}\PY{o}{.}\PY{o}{.}
       \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
-              \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}
-              \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{MATCH\PYZus{}TYPE}\PY{o}{,} \PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{o}{)}
               \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
       \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}      
     \PY{o}{\PYZcb{}}
@@ -84,17 +91,123 @@ agosto 2004
 
 \begin{frame}[fragile]{XML (1)}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
-    \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 
-    \PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}sendChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
-        \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}mailchecker\PYZus{}match\PYZus{}type\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
-    \PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} 
+      \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}} \PY{n+na}{autowire\PYZhy{}candidate=}\PY{l+s}{\PYZdq{}false\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}defaultEncoding\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}UTF\PYZhy{}8\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}javaMailProperties\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}props}\PY{n+nt}{\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.transport.protocol\PYZdq{}}\PY{n+nt}{\PYZgt{}}smtp\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.smtp.auth\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.from\PYZdq{}}\PY{n+nt}{\PYZgt{}}bounces@despegar.com\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.debug\PYZdq{}}\PY{n+nt}{\PYZgt{}}true\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}/props\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/property\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
 \end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño (2) - Inbound channel adapter}
+\includegraphics[width=0.9\linewidth]{sp-int-02}
+\end{frame}
+
+\begin{frame}[fragile]{XML (2)}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+...
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{java\PYZhy{}mail\PYZhy{}properties=}\PY{l+s}{\PYZdq{}otrosProperties\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}}
+    \PY{n+na}{should\PYZhy{}delete\PYZhy{}messages=}\PY{l+s}{\PYZdq{}true\PYZdq{}}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:poller} \PY{n+na}{max\PYZhy{}messages\PYZhy{}per\PYZhy{}poll=}\PY{l+s}{\PYZdq{}5\PYZdq{}} \PY{n+na}{fixed\PYZhy{}rate=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.aol.rate\PYZcb{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}} 
+\PY{n+nt}{\PYZlt{}/int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}util:properties} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}otrosProperties\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.fallback\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.port\PYZdq{}}\PY{n+nt}{\PYZgt{}}995\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.class\PYZdq{}}\PY{n+nt}{\PYZgt{}}javax.net.ssl.SSLSocketFactory\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.pop3.socketFactory.port\PYZdq{}}\PY{n+nt}{\PYZgt{}}995\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}prop} \PY{n+na}{key=}\PY{l+s}{\PYZdq{}mail.debug\PYZdq{}}\PY{n+nt}{\PYZgt{}}false\PY{n+nt}{\PYZlt{}/prop\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/util:properties\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño (2)}
+\includegraphics[width=0.9\linewidth]{sp-int-03}
+\end{frame}
+
+\begin{frame}{Diseño (2)}
+\includegraphics[width=0.9\linewidth]{sp-int-04}
+\end{frame}
+
+\begin{frame}{Diseño (2$\frac{1}{2}$) - Publish-Subscribe Channel}
+\includegraphics[width=1.0\linewidth]{sp-int-05}
+\end{frame}
+
+
+\begin{frame}[fragile]{Diseño (2$\frac{1}{2}$)}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:publish\PYZhy{}subscribe\PYZhy{}channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{.}\PY{n+nt}{.}\PY{n+nt}{.} \PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}{Diseño (3) - Bridge}
+\includegraphics[width=1.0\linewidth]{sp-int-06}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño (3) - Bridge}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:publish\PYZhy{}subscribe\PYZhy{}channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}o.s.mail.javamail.JavaMailSenderImpl\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+...
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}} 
+
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{.}\PY{n+nt}{.}\PY{n+nt}{.} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:bridge} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}}
+\end{Verbatim}
+
+\end{frame}
+
+\begin{frame}{Diseño (4) - Aggregator}
+Definiciones para el aggregator
+\begin{itemize}[<+->]
+\item A qué grupo pertenece un mensaje
+\item Cuándo está completo el grupo
+\item Cómo armo el mensaje de salida con el grupo completo
+\end{itemize}
+\end{frame}
+
+
+\subsection{Subscriptions API v3}
+\begin{frame}{agregar alerta}
+\includegraphics[width=1.0\linewidth]{subs-v3-add}
 \end{frame}
 
 % tapa del libro de EIP
 % Se edito en agosto 2004
-% los frameworks en _tal_ año
+% los frameworks en Sp 2006, cam 2007
 % Diferencias entre las implementaciones:
 % - Spring mucho mas cercano al libro
 % - Camel mas cómodo y flexible para el programador, se ajusta a su manera de programar
@@ -102,12 +215,14 @@ agosto 2004
 % no es la panacea
 % preambulo ejemplo: endpoint, channel, message
 % ejemplo mail sender
-% channel adapters destacados
 % casos especiales: excepciones, transacciones
 % endpoints y/o canales interesantes para destacar (jdbc inbound ch adapter, jpa outbound gateway, etc)
 % subscriptions api v3
 % wiretap, gateway con java
 % conclusiones: no es necesario usar una implementacion, se trata de aprender el lenguaje comun
+
+\section{Cierre}
+\subsection{Palabras finales}
 
 \begin{frame}{Referencias}
 \begin{center}
