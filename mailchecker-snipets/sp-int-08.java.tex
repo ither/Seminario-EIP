@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
+\PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+    \PY{k+kd}{private} \PY{k+kd}{final} \PY{n}{MessagingTemplate} \PY{n}{template} \PY{o}{=} \PY{k}{new} \PY{n}{MessagingTemplate}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+    \PY{n+nd}{@Autowired}
+    \PY{n}{MessageChannel} \PY{n}{sendChannel}\PY{o}{;}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+
+    \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
+    \PY{o}{\PYZob{}}
+         \PY{c+c1}{// Arma el mail}
+         \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{mimeMessage}\PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{l+s}{\PYZdq{}X\PYZhy{}Mailchecker\PYZdq{}}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{MATCH\PYZus{}TYPE}\PY{o}{,} \PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}

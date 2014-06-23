@@ -1,0 +1,6 @@
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" output-channel="matchedChannel" 
+                ref="mailAggregator" />
+
+<int:channel id="matchedChannel" />
+<int-file:outbound-channel-adapter channel="matchedChannel" directory="file:results/matched"/>

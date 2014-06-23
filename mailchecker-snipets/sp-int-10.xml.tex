@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} 
+                \PY{n+na}{ref=}\PY{l+s}{\PYZdq{}mailAggregator\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}fileMatchedChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}com.despegar.checkmail.integration.MimeMessageToStringTransformer\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:transformer\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}file\PYZus{}name\PYZdq{}} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}headers[\PYZsq{}mailchecker\PYZus{}id\PYZsq{}] + \PYZsq{}.msg\PYZsq{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}fileMatchedChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}file:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} \PY{n+na}{directory=}\PY{l+s}{\PYZdq{}file:results/matched\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}

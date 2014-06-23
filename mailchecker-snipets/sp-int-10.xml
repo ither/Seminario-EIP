@@ -1,0 +1,15 @@
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" output-channel="matchedChannel" 
+                ref="mailAggregator" />
+
+<int:chain input-channel="matchedChannel" output-channel="fileMatchedChannel">
+    <int:transformer>
+        <bean class="com.despegar.checkmail.integration.MimeMessageToStringTransformer" />
+    </int:transformer>
+    <int:header-enricher>
+        <int:header name="file_name" expression="headers['mailchecker_id'] + '.msg'" />
+    </int:header-enricher>
+</int:chain>
+
+<int:channel id="fileMatchedChannel" />
+<int-file:outbound-channel-adapter channel="matchedChannel" directory="file:results/matched"/>

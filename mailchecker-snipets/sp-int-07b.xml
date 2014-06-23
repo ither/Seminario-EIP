@@ -1,0 +1,11 @@
+<int-mail:inbound-channel-adapter id="aolAdapter"
+    store-uri="pop3://desp_test2%40aol.com:desp123@pop.aol.com/INBOX"
+    channel="receiveChannel" ... />
+
+<int:channel id="receiveChannel" />
+<int:header-enricher input-channel="receiveChannel" output-channel="aggregatorChannel">
+    <int:header name="mailchecker_match_type" value="received" />
+    <int:header name="mailchecker_id" 
+        expression="payload.getHeader('X-Mailchecker', null) ?: 'nogroup' + new java.util.Random().nextInt()" />
+</int:header-enricher>
+
