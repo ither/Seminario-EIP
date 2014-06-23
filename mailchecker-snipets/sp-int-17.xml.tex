@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{auto\PYZhy{}startup=}\PY{l+s}{\PYZdq{}false\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{err}{.}\PY{err}{.}\PY{err}{.} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}
+                 \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:control\PYZhy{}bus} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}

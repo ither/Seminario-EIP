@@ -1,0 +1,10 @@
+<int:transformer input-channel="requestChannel" output-channel="controlChannel"
+                 expression="'@' + headers['mailchecker_poller'] + '.start()'"/>
+
+<int:chain input-channel="requestChannel" output-channel="controlBusChannel">
+    <int:delayer default-delay="${pollers.stop.delay}" />
+    <int:transformer expression="'@' + headers['mailchecker_poller'] + '.stop()'"/>
+</int:chain>
+
+<int:channel id="controlChannel"/>
+<int:control-bus input-channel="controlChannel"/>

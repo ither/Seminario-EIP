@@ -1,0 +1,10 @@
+<int-mail:inbound-channel-adapter id="aolAdapter"
+    store-uri="pop3://desp_test2%40aol.com:desp123@pop.aol.com/INBOX"
+    auto-startup="false"
+    channel="receiveChannel" ... />
+
+<int:transformer input-channel="requestChannel" output-channel="controlChannel"
+                 expression="'@' + headers['mailchecker_poller'] + '.start()'"/>
+
+<int:channel id="controlChannel"/>
+<int:control-bus input-channel="controlChannel"/>

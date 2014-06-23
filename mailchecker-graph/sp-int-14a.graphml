@@ -241,7 +241,7 @@ channel adapter<y:LabelModel>
     <node id="n14">
       <data key="d6">
         <y:ImageNode>
-          <y:Geometry height="70.0" width="90.0" x="889.0" y="746.3896825396826"/>
+          <y:Geometry height="70.0" width="90.0" x="719.0" y="746.3896825396826"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="69.34375" x="10.328125" y="74.0">Transformer</y:NodeLabel>
@@ -263,17 +263,6 @@ channel adapter<y:LabelModel>
     <node id="n16">
       <data key="d6">
         <y:ImageNode>
-          <y:Geometry height="70.0" width="90.0" x="719.0" y="746.3896825396826"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="45.349609375" x="22.3251953125" y="74.0">Delayer</y:NodeLabel>
-          <y:Image alphaImage="true" refid="12"/>
-        </y:ImageNode>
-      </data>
-    </node>
-    <node id="n17">
-      <data key="d6">
-        <y:ImageNode>
           <y:Geometry height="70.0" width="90.0" x="719.0" y="858.3896825396826"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
@@ -282,7 +271,7 @@ channel adapter<y:LabelModel>
         </y:ImageNode>
       </data>
     </node>
-    <node id="n18">
+    <node id="n17">
       <data key="d6">
         <y:ImageNode>
           <y:Geometry height="70.0" width="90.0" x="889.0" y="858.3896825396826"/>
@@ -433,39 +422,17 @@ channel adapter<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e14" source="n16" target="n14">
+    <edge id="e14" source="n3" target="n16">
       <data key="d9">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="0.0" sy="-0.0" tx="-44.67986918400038" ty="-11.155571563682543"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e15" source="n3" target="n16">
-      <data key="d8"/>
-      <data key="d9">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e16" source="n3" target="n17">
-      <data key="d8"/>
-      <data key="d9">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-0.0" tx="-44.38358400000027" ty="-22.08817853968253"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e17" source="n18" target="n15">
+    <edge id="e15" source="n17" target="n15">
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-0.0" tx="0.0" ty="-0.0"/>
@@ -475,10 +442,21 @@ channel adapter<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e18" source="n17" target="n18">
+    <edge id="e16" source="n16" target="n17">
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-0.0" tx="0.0" ty="-0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e17" source="n3" target="n14">
+      <data key="d8"/>
+      <data key="d9">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:BendStyle smoothed="false"/>

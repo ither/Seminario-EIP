@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.start.delay\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZsh{}\PYZob{}\PYZdl{}\PYZob{}pollers.start.delay\PYZcb{} + \PYZdl{}\PYZob{}matcher.reaper.delay\PYZcb{} + 60000\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.stop()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:control\PYZhy{}bus} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}

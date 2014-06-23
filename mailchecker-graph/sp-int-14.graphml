@@ -244,7 +244,7 @@ channel adapter<y:LabelModel>
           <y:Geometry height="70.0" width="90.0" x="719.0" y="746.3896825396826"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="30.666015625" x="29.6669921875" y="74.0">Filter</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="69.34375" x="10.328125" y="74.0">Transformer</y:NodeLabel>
           <y:Image alphaImage="true" refid="10"/>
         </y:ImageNode>
       </data>
@@ -255,19 +255,8 @@ channel adapter<y:LabelModel>
           <y:Geometry height="70.0" width="90.0" x="889.0" y="746.3896825396826"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="69.34375" x="10.328125" y="74.0">Transformer</y:NodeLabel>
-          <y:Image alphaImage="true" refid="11"/>
-        </y:ImageNode>
-      </data>
-    </node>
-    <node id="n16">
-      <data key="d6">
-        <y:ImageNode>
-          <y:Geometry height="70.0" width="90.0" x="1059.0" y="746.3896825396826"/>
-          <y:Fill color="#CCCCFF" transparent="false"/>
-          <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="66.6953125" x="11.65234375" y="74.0">Control Bus</y:NodeLabel>
-          <y:Image alphaImage="true" refid="12"/>
+          <y:Image alphaImage="true" refid="11"/>
         </y:ImageNode>
       </data>
     </node>
@@ -282,7 +271,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n3" target="n2">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -293,7 +281,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e2" source="n2" target="n6">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -304,7 +291,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e3" source="n2" target="n7">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -315,7 +301,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n8" target="n9">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -326,7 +311,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e5" source="n9" target="n2">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -337,7 +321,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e6" source="n6" target="n10">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -348,7 +331,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e7" source="n10" target="n4">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -359,7 +341,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e8" source="n7" target="n11">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -370,7 +351,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e9" source="n11" target="n5">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -381,7 +361,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e10" source="n3" target="n12">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -392,7 +371,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e11" source="n12" target="n1">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -403,7 +381,6 @@ channel adapter<y:LabelModel>
       </data>
     </edge>
     <edge id="e12" source="n12" target="n13">
-      <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -413,8 +390,7 @@ channel adapter<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e13" source="n3" target="n14">
-      <data key="d8"/>
+    <edge id="e13" source="n14" target="n15">
       <data key="d9">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -424,18 +400,7 @@ channel adapter<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e14" source="n14" target="n15">
-      <data key="d8"/>
-      <data key="d9">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e15" source="n15" target="n16">
+    <edge id="e14" source="n3" target="n14">
       <data key="d8"/>
       <data key="d9">
         <y:PolyLineEdge>
@@ -717,38 +682,7 @@ QMu2+KCMFrtkWGzPsdhGvUZhgpXQMtwdH4Ku/mzN1uo1MMSUi0VkslyLhUEXa3GgZi2Wnu6Wi6vF&#13
 YmFB16LFezIs3hSxWHy6WyquFtOADlbgsTDlLbZWj8VCoOvP4vXKWywFumlxBvCyEhYLgy6PxZ4y&#13;
 W2yppMVCoGvV4q1qtlgUdAUeC6tri4VA16XFUXqLl9SwWAh0M+rnf72B3fBk+SEUAAAAAElFTkSu&#13;
 QmCC</y:Resource>
-      <y:Resource id="10" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAFoAAABGCAYAAABMvIPiAAAGi0lEQVR42u3c2VbaWhzH8T5tX6Be&#13;
-teu8SVv1aOtYjy4rKo6liiODM8gsKCLKPAm2/5NsSLIJO5gNGXZp6vr1iqvP+i7MjoQ3x8fHYE3/&#13;
-veH/0/Pf764/v6Sf3/he4IW4BjQ6Vkert+0Z7fmXsJq4mrgqWlVcRVwFrdzcSxnKaCVxJbSiuCJa&#13;
-oW2FlzwUGs3pDN0LsBJyg4CsBvhZEZiEXMGRX9QiKwPzyzdy+kFbFTeBhekAbVUsR843stpC/w0V&#13;
-lygq5pfjkHPaQVsVkyrOYesb2qqYH7ni5jKQ5dYXtFVx94oF5J6hrYrVVSztiR7aqlh9xTxwtv4E&#13;
-mToFtFXxaxVnOyrO1IU9qoNWRWxVLK3ejvz0GrRVcT8VS8hdoa2K+6+4uTRaB7RVsXYVC8iPcui/&#13;
-o+IiRcW5vip+FPcgQQ9axeU+K85rUDEPzC/9GvQvKmSrYnnFAnK6nlKCtirWomK05xRaB3T/FTdU&#13;
-VRxLRGFoaAjevn1r6N4NvYPAzbVGFT92rZgHfmgNgzaqYqnkaAt7ZX0FSo1i2/LPOciWM5DOP0Dy&#13;
-KQnxVBzCiTD4Iz4485+B69QF+649cDh/wPr2OthWl2B+8T+Y/jYNE1MT8HXyK8zMzoBt2QbOPSdM&#13;
-Tk22kP2GVdxEvkcToY2omPQ2EU1EEPby+jIU6nlx2VoGHktpuM8mIfHAId9xyFE/nF2fwvHZMTiP&#13;
-nLC1uwmrGyuwYFuAmblpGJ8Yh+HRYfg0/AlGxkZgemYa7HY7jI6OIuRrGbLeFQvIqTZogyom/cKL&#13;
-CNhrNsjXc2iZ6hOkiw9wl7mFm1QMgokgXIYvwXvlgQPvATj2HbD2ww7fVxdhdmEWvkyNc7jD8HH4&#13;
-I8Lmq16yLcHnz58JyMZUnEJLohGg9a+Y9Asvwr0t4Ni00BMzX7mix1DVs99mYdW+CiMjIx3IRlYs&#13;
-IMugja2YdEURToQ47HcImwZ6bnEOpuem0NvH/OI8bGxuwOi/8rcLYyqWI9+j3UnQZlTccdnGXa6F&#13;
-4yEEtGT/rgqafx3/Hr3wfZ77hWiDbcc2jI2NtSGbVTEPLEwB2riKSdfFoRb24spiV+h1xxp3xbIM&#13;
-NrsN1jbtsOPcgfEv4xiyuRULS9Zu5dBaVlxTXTHp8CFgz3OlKkFvONbBvrWKLu9293fhC4bMQsXJ&#13;
-FrIM2tyKSae7UDwIH/75oAi9+XODw97grqUd4D31wPv37zlknwYVpzWpWNgdDq224rqOFZPuUfCn&#13;
-OUXonU3Y3tmCvcM9uPJfodeyVHETOYFGgDa3Yvk9im7Q/IHlx+42HLoOIRAKiNCmVfzcXrGATICW&#13;
-A9dNqRi/CfQaNH8EP3IfQSgSQq9lqWJ+t7U4JGo3ODQ7FeN32nqDZqNiATlejUnQLFWM38qkhpYB&#13;
-Z0yq+JYDFpBvqlE5tBYVVzS8X0wPzVLFPPBNNQKxahiHZqdi/K8e9NB0Fad1rDjGIUc55GglJEFr&#13;
-VTEZudjzn/lpoVmqOFoJQ4RDDleCcmgTKn7lQ9y9QbNRcYQDDlcCEKpc49DsVIzfo6CHZqdiATlY&#13;
-9kvQLFWMn+5ooVmqOFhuIgfKPjk0GxXjR2h6aKziukEVV8kV88DX5Ss0DFrPigtUFeOnO1potX9a&#13;
-kiO/XnGcumIe2F++BF/poh2alYrx0x09NDsVC8hXpXMJmqWK8SM0NbQZFVfIFQvIl6UzHJqNRxHk&#13;
-9yhoobWuON5HxVccMI98UTpth2alYvx01ws0KxVfcsAXxVM4L55I0CxVjJ/ueDylD9D8PHCA83AX&#13;
-PCceiMQi6LXGVuzrWvEFB3xe9MIZNwxa+wfNe60YP93xeEofCTvyHoH7xAUXvguI38Zb0HpVHKCu&#13;
-uInsgVNuEjRDFeOnO9oPMfZfcUSDik9QxU1kN5wU3BI0SxX38pErIyv2q6y4iexC64BmoWLlm/J6&#13;
-XVH0UvF594pbyF407Kt+tPq6BFYrJh0+6Cq+pK6YB/agHeHQg1NxkpGKeWB+7sJhJ7SWD5qzWnHM&#13;
-oIrdLWR3HoPW40Hz3itODUTF/Fz5AzQiNOsV3zNTsbtrxSJyfr8d2qpY24pFZBxaq69LGMyKvb1V&#13;
-jE+E1uFBc+0qvqOoONpWccTMisnQ2j1oblXcBfpPrDhBUXGAumJP/xUrQedMeCxM+4qD7FRMgh68&#13;
-iv3mV9wN2qq4CezVomIytDEVpwyu2GdmxSToP7XiEMsVK0Iz9CjCQFRMgh7IikvqK/boUTEJ2pr+&#13;
-+x9F5mN80NykkAAAAABJRU5ErkJggg==</y:Resource>
-      <y:Resource id="11" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAFoAAABGCAYAAABMvIPiAAAHfUlEQVR42u3cWU8bSRAH8HwnHoHP&#13;
+      <y:Resource id="10" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAFoAAABGCAYAAABMvIPiAAAHfUlEQVR42u3cWU8bSRAH8HwnHoHP&#13;
 kATBkoOX5IFvxwsSivgGeyRACPfhi8M22AaDD7AhvdM99ExNu7ummemusFknqkTRSlbpp/82466y&#13;
 X339+pWNy3+94n/4/PUT/f0Y//4J64E9aGvIhiM1EDVI1L2o+0dZd1HdRdUX1Y+qF1VPVDeshy7r&#13;
 iupE1RF1G9WtqJtE3Ty02c0wLM/QWYBNyEMNsg3wvRFYh9yDyA+2yGZgXu3htT/ocYpDYFkeoMcp&#13;
@@ -783,7 +717,7 @@ zM+nHhS9oimGFUFbfAGTXBz0XTXLxUFdiuFoiaJXNMV6aOwLmK6svy7BxR1FnhSXR2Z3h9r74v3O&#13
 TsodxQZ4olizP4tNJaFtvoDJ5usSbD7caPdEkZ7iU02KiyOjpRBYvc4M7yi2kDuKdesnilRkFTpP&#13;
 ipsvJsVHLyfFOujfL8X7vz7FGPQ4xSHwhosU66FpUlwnTvHer0yxDvq/muLjl5xiI7QRuDFOsSvo&#13;
 3zLFHfsUr/tIsQ56XP7rX6PpaVsoyxwlAAAAAElFTkSuQmCC</y:Resource>
-      <y:Resource id="12" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAFoAAABGCAYAAABMvIPiAAAcxklEQVR42u3cd3hUZdoG8FyXgkpT&#13;
+      <y:Resource id="11" type="java.awt.image.BufferedImage">iVBORw0KGgoAAAANSUhEUgAAAFoAAABGCAYAAABMvIPiAAAcxklEQVR42u3cd3hUZdoG8FyXgkpT&#13;
 AYEQkE4IPfQWWiCdNNIT0hvpDUIJoYYEAqEkQIKhd6RIUVwb0ouU0KV3XNe1IU109/6e5z3zzpwJ&#13;
 mWFUWPdzketG/mGG+eU+z3lPG7MjR47gRZ5/zPi35/nfv43++pfu17/V+RW/Vphf8MsTeSzyWC8/&#13;
 i/z8L5lH2jzS5qHIQ20eaPNA5L6SX+/jvsg9be6J/KTNTyJ39XL31x9x9xclzxn69wAbQv6lAmRT&#13;

@@ -513,6 +513,116 @@ Ahora puede haber más de un servidor SMTP por el que quiera enviar los mails. E
 \end{Verbatim}
 \end{frame}
 
+\begin{frame}{Diseño - Más de un SMTP}
+\includegraphics[width=1.0\linewidth]{sp-int-13}
+\end{frame}
+
+\begin{frame}{Diseño - Empezar / detener polling}
+\begin{center}
+\Large{Cambio de requerimiento}
+\end{center}
+El sistema debe empezar a hacer \textit{polling} solamente cuando envía mails y debe detenerse luego de unos minutos.
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Empezar / detener polling}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
+\PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+    \PY{k+kd}{private} \PY{k+kd}{final} \PY{n}{MessagingTemplate} \PY{n}{template} \PY{o}{=} \PY{k}{new} \PY{n}{MessagingTemplate}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+    \PY{n+nd}{@Autowired}
+    \PY{n}{MessageChannel} \PY{n}{sendChannel}\PY{o}{;}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+
+    \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
+    \PY{o}{\PYZob{}}
+         \PY{c+c1}{// Arma el mail}
+         \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{mimeMessage}\PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{l+s}{\PYZdq{}X\PYZhy{}Mailchecker\PYZdq{}}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{MATCH\PYZus{}TYPE}\PY{o}{,} \PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{SENDER}\PY{o}{,} \PY{n}{sender}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{POLLER}\PY{o}{,} \PY{n}{poller}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Empezar / detener polling}
+\includegraphics[width=0.9\linewidth]{sp-int-14}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Empezar / detener polling}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{auto\PYZhy{}startup=}\PY{l+s}{\PYZdq{}false\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+nt}{.}\PY{n+nt}{.}\PY{n+nt}{.} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}
+                 \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:control\PYZhy{}bus} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Empezar / detener polling}
+\includegraphics[width=0.8\linewidth]{sp-int-14a}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Empezar / detener polling}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}
+                 \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.stop.delay\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.stop()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:control\PYZhy{}bus} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Empezar / detener polling}
+Algunos proveedores de servicio (en particular Hotmail) no permiten hacer \textit{polling} más seguido de 15min. Por lo que si se empieza a hacer \textit{polling} ni bien se hace el envío, no da la oportunidad de llegar al mail y tengo que esperar innecesariamente.
+\end{frame}
+
+\begin{frame}{Diseño - Empezar / detener polling}
+\includegraphics[width=0.8\linewidth]{sp-int-15}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Empezar / detener polling}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.start.delay\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZsh{}\PYZob{}\PYZdl{}\PYZob{}pollers.start.delay\PYZcb{} + \PYZdl{}\PYZob{}matcher.reaper.delay\PYZcb{} + 60000\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.stop()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:control\PYZhy{}bus} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}{Diseño final}
+\includegraphics[width=0.7\linewidth]{sp-int-99}
+\end{frame}
+
+
 \subsection{Subscriptions API v3}
 \begin{frame}
 \begin{center}
