@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}throwAwayChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}com.despegar.checkmail.integration.MimeMessageToStringTransformer\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:transformer\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}file\PYZus{}name\PYZdq{}} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}headers[\PYZsq{}timestamp\PYZsq{}] + }
+\PY{l+s}{                    \PYZsq{}\PYZhy{}\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}match\PYZus{}type\PYZsq{}] + \PYZsq{}.msg\PYZsq{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}file:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+na}{directory=}\PY{l+s}{\PYZdq{}file:results/throwAway\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}

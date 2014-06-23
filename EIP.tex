@@ -331,7 +331,6 @@ Para ello, guardaremos el contenido como archivo.
 \includegraphics[width=1.0\linewidth]{sp-int-11b}
 \end{frame}
 
-
 \begin{frame}[fragile]{Diseño (6) - Transformer}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 \PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MimeMessageToStringTransformer} \PY{o}{\PYZob{}}
@@ -343,7 +342,6 @@ Para ello, guardaremos el contenido como archivo.
 \PY{o}{\PYZcb{}}
 \end{Verbatim}
 \end{frame}
-
 
 \begin{frame}{Diseño (7) - Chain}
 \includegraphics[width=1.0\linewidth]{sp-int-12b}
@@ -366,6 +364,74 @@ Para ello, guardaremos el contenido como archivo.
 
 \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}fileMatchedChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 \PY{n+nt}{\PYZlt{}int\PYZhy{}file:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} \PY{n+na}{directory=}\PY{l+s}{\PYZdq{}file:results/matched\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Caso feliz}
+\includegraphics[width=1.0\linewidth]{sp-int-12b}
+\end{frame}
+
+% explicar que puede haber varias casillas de mail como haga falta
+
+\begin{frame}{Diseño - Casos no felices}
+\begin{itemize}
+\item Mails que no llegan
+\item Mail que no fueron generados por la aplicación y no tienen el encabezado MIME
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Aggregator (2da parte)}
+¿Dónde guarda los mensajes el Aggregator?
+\pause
+\begin{center}
+\verb|MessageStore|
+\end{center}
+\begin{itemize}[<+->]
+\item Implementación en memoria (\verb|SimpleMessageStore|)
+\item Otras implementaciones interesantes: JDBC, Mongo, Redis
+\item Se puede hacer un implementación propia
+\item Los \verb|MessageStore| tienen manera de purgar grupos mensajes por timeout (\verb|MessageGroupStoreReaper|)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Aggregator - Message Store}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:aggregator} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}matchedChannel\PYZdq{}} 
+                \PY{n+na}{ref=}\PY{l+s}{\PYZdq{}mailAggregator\PYZdq{}} 
+                \PY{n+na}{discard\PYZhy{}channel=}\PY{l+s}{\PYZdq{}throwAwayChannel\PYZdq{}} 
+                \PY{n+na}{message\PYZhy{}store=}\PY{l+s}{\PYZdq{}aggregatorMessageStore\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorMessageStore\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.integration.store.SimpleMessageStore\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorReaper\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.integration.store.MessageGroupStoreReaper\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}messageGroupStore\PYZdq{}} \PY{n+na}{ref=}\PY{l+s}{\PYZdq{}aggregatorMessageStore\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}timeout\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}matcher.reaper.delay\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}task:scheduled\PYZhy{}tasks}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}task:scheduled} \PY{n+na}{ref=}\PY{l+s}{\PYZdq{}aggregatorReaper\PYZdq{}} \PY{n+na}{method=}\PY{l+s}{\PYZdq{}run\PYZdq{}} \PY{n+na}{fixed\PYZhy{}rate=}\PY{l+s}{\PYZdq{}10000\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/task:scheduled\PYZhy{}tasks\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Caso feliz y no feliz}
+\includegraphics[width=1.0\linewidth]{sp-int-12}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Caso no feliz}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}throwAwayChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:transformer}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}com.despegar.checkmail.integration.MimeMessageToStringTransformer\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:transformer\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}file\PYZus{}name\PYZdq{}} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}headers[\PYZsq{}timestamp\PYZsq{}] + }
+\PY{l+s}{                    \PYZsq{}\PYZhy{}\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}match\PYZus{}type\PYZsq{}] + \PYZsq{}.msg\PYZsq{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}file:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+na}{directory=}\PY{l+s}{\PYZdq{}file:results/throwAway\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 \end{Verbatim}
 \end{frame}
 
@@ -395,6 +461,7 @@ Desarrollar un caso de uso del sistema que reciba información sobre un grupo de
 % endpoints y/o canales interesantes para destacar (jdbc inbound ch adapter, jpa outbound gateway, etc)
 % subscriptions api v3
 % wiretap, gateway con java
+% retry framework
 % conclusiones: no es necesario usar una implementacion, se trata de aprender el lenguaje comun
 
 \section{Cierre}
@@ -416,8 +483,10 @@ Libros \\
 \href{https://www.dropbox.com/s/gwa5p1edxpgudcz/Manning.Spring.Integration.in.Action.Sep.2012.pdf}{Spring Integration In Action, Manning 2012}  \\
 \href{https://www.dropbox.com/s/zd9uft4ygbclehn/Addison.Wesley.Enterprise.Integration.Patterns.pdf}{Enterprise Integration Patterns, Addison Wesley 2004} \\
 \href{https://www.dropbox.com/s/gjfegd85cvih78a/Manning.Camel.in.Action.Dec.2010.pdf}{Apache Camel In Action, Manning 2011} \\
-Proyectos \\
-\href{http://gitlab.despegar.it/mail-checker/mail-checker}{mailSender en GitLab}
+Proyectos en Despegar \\
+\href{http://gitlab.despegar.it/mail-checker/mail-checker}{mailSender en GitLab} \\
+Ejemplos \\
+\href{https://github.com/spring-projects/spring-integration-samples}{Ejemplos Sp Integration}
 \end{center}
 \end{frame}
 \end{document}

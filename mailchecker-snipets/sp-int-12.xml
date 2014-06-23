@@ -1,0 +1,15 @@
+<int:channel id="aggregatorChannel" />
+<int:aggregator input-channel="aggregatorChannel" output-channel="matchedChannel" 
+                ref="mailAggregator" 
+                discard-channel="throwAwayChannel" 
+                message-store="aggregatorMessageStore" />
+
+<bean id="aggregatorMessageStore" class="org.springframework.integration.store.SimpleMessageStore" />
+<bean id="aggregatorReaper" class="org.springframework.integration.store.MessageGroupStoreReaper">
+    <property name="messageGroupStore" ref="aggregatorMessageStore" />
+    <property name="timeout" value="${matcher.reaper.delay}" />
+</bean>
+
+<task:scheduled-tasks>
+    <task:scheduled ref="aggregatorReaper" method="run" fixed-rate="10000"/>
+</task:scheduled-tasks>

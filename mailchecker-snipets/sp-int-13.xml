@@ -1,0 +1,12 @@
+<int:chain input-channel="throwAwayChannel" output-channel="fileThrowAwayChannel">
+    <int:transformer>
+        <bean class="com.despegar.checkmail.integration.MimeMessageToStringTransformer" />
+    </int:transformer>
+    <int:header-enricher>
+        <int:header name="file_name" expression="headers['timestamp'] + 
+                    '-' + headers['mailchecker_match_type'] + '.msg'" />
+    </int:header-enricher>
+</int:chain>
+
+<int:channel id="fileThrowAwayChannel" />
+<int-file:outbound-channel-adapter channel="fileThrowAwayChannel" directory="file:results/throwAway"/>
