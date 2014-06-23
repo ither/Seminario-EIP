@@ -1,0 +1,11 @@
+<int:publish-subscribe-channel id="requestChannel" />
+<int:header-value-router input-channel="requestChannel" header-name="mailchecker_sender">
+    <int:mapping value="mailSender1" channel="sender1Channel" />
+    <int:mapping value="mailSender2" channel="sender2Channel" />
+</int:header-value-router>
+
+<int:channel id="sender1Channel" />
+<int-mail:outbound-channel-adapter channel="sender1Channel" mail-sender="mailSender1"/>
+
+<int:channel id="sender2Channel" />
+<int-mail:outbound-channel-adapter channel="sender2Channel" mail-sender="mailSender2"/>

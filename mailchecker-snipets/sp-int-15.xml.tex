@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:publish\PYZhy{}subscribe\PYZhy{}channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:header\PYZhy{}value\PYZhy{}router} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{header\PYZhy{}name=}\PY{l+s}{\PYZdq{}mailchecker\PYZus{}sender\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:mapping} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}mailSender1\PYZdq{}} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:mapping} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}mailSender2\PYZdq{}} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:header\PYZhy{}value\PYZhy{}router\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}mailSender1\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}mailSender2\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}

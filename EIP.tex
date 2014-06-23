@@ -1,4 +1,4 @@
-% !TeX spellcheck = en_US
+% !TeX spellcheck = es_ES
 \documentclass{beamer}
 
 \usepackage[T1]{fontenc}
@@ -380,7 +380,11 @@ Para ello, guardaremos el contenido como archivo.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Diseño - Aggregator (2da parte)}
+\begin{frame}{Diseño - Casos no felices}
+Para lograr esto, necesitamos indicarle al Aggregator que los mensajes que no forman grupo en un determinado tiempo deben descartarse.
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Aggregator (Message Store)}
 ¿Dónde guarda los mensajes el Aggregator?
 \pause
 \begin{center}
@@ -390,7 +394,7 @@ Para ello, guardaremos el contenido como archivo.
 \item Implementación en memoria (\verb|SimpleMessageStore|)
 \item Otras implementaciones interesantes: JDBC, Mongo, Redis
 \item Se puede hacer un implementación propia
-\item Los \verb|MessageStore| tienen manera de purgar grupos mensajes por timeout (\verb|MessageGroupStoreReaper|)
+\item Los \verb|MessageStore| tienen manera de purgar grupos de mensajes por timeout (\verb|MessageGroupStoreReaper|)
 \end{itemize}
 \end{frame}
 
@@ -414,9 +418,6 @@ Para ello, guardaremos el contenido como archivo.
 \end{Verbatim}
 \end{frame}
 
-\begin{frame}{Diseño - Caso feliz y no feliz}
-\includegraphics[width=1.0\linewidth]{sp-int-12}
-\end{frame}
 
 \begin{frame}[fragile]{Diseño - Caso no feliz}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
@@ -432,6 +433,83 @@ Para ello, guardaremos el contenido como archivo.
 
 \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 \PY{n+nt}{\PYZlt{}int\PYZhy{}file:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}fileThrowAwayChannel\PYZdq{}} \PY{n+na}{directory=}\PY{l+s}{\PYZdq{}file:results/throwAway\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Caso no feliz}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:inbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aolAdapter\PYZdq{}}
+    \PY{n+na}{store\PYZhy{}uri=}\PY{l+s}{\PYZdq{}pop3://desp\PYZus{}test2\PYZpc{}40aol.com:desp123@pop.aol.com/INBOX\PYZdq{}}
+    \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+nt}{.}\PY{n+nt}{.}\PY{n+nt}{.} \PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:header\PYZhy{}enricher} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}receiveChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}mailchecker\PYZus{}match\PYZus{}type\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}received\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:header} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}mailchecker\PYZus{}id\PYZdq{}} 
+        \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}payload.getHeader(\PYZsq{}X\PYZhy{}Mailchecker\PYZsq{}, null) ?: }
+\PY{l+s}{                    \PYZsq{}nogroup\PYZsq{} + new java.util.Random().nextInt()\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
+
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Diseño - Caso feliz y no feliz}
+\includegraphics[width=1.0\linewidth]{sp-int-12}
+\end{frame}
+
+\begin{frame}{Diseño - Más de un SMTP}
+\begin{center}
+\Large{Cambio de requerimiento}
+\end{center}
+Ahora puede haber más de un servidor SMTP por el que quiera enviar los mails. El servidor elegido se indica en el formulario web.
+\end{frame}
+
+\begin{frame}{Diseño - Más de un SMTP}
+\includegraphics[width=1.0\linewidth]{sp-int-13}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Más de un SMTP}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
+\PY{o}{\PYZob{}}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+    \PY{k+kd}{private} \PY{k+kd}{final} \PY{n}{MessagingTemplate} \PY{n}{template} \PY{o}{=} \PY{k}{new} \PY{n}{MessagingTemplate}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+
+    \PY{n+nd}{@Autowired}
+    \PY{n}{MessageChannel} \PY{n}{sendChannel}\PY{o}{;}
+    \PY{o}{.}\PY{o}{.}\PY{o}{.}
+
+    \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
+    \PY{o}{\PYZob{}}
+         \PY{c+c1}{// Arma el mail}
+         \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{mimeMessage}\PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{l+s}{\PYZdq{}X\PYZhy{}Mailchecker\PYZdq{}}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}\PY{o}{;}
+         \PY{o}{.}\PY{o}{.}\PY{o}{.}
+         \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{MATCH\PYZus{}TYPE}\PY{o}{,} \PY{l+s}{\PYZdq{}sent\PYZdq{}}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{SENDER}\PY{o}{,} \PY{n}{sender}\PY{o}{)}
+         \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+         \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Diseño - Más de un SMTP}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:publish\PYZhy{}subscribe\PYZhy{}channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:header\PYZhy{}value\PYZhy{}router} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{header\PYZhy{}name=}\PY{l+s}{\PYZdq{}mailchecker\PYZus{}sender\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:mapping} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}mailSender1\PYZdq{}} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:mapping} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}mailSender2\PYZdq{}} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:header\PYZhy{}value\PYZhy{}router\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender1Channel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}mailSender1\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}sender2Channel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}mailSender2\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 \end{Verbatim}
 \end{frame}
 
