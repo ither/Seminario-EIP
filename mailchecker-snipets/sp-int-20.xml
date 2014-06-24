@@ -1,0 +1,10 @@
+<int:channel id="logChannel" />
+<int:logging-channel-adapter channel="logChannel" level="INFO" log-full-message="true" 
+        logger-name="int-logger-aggregator" />
+
+
+<int:channel id="aggregatorChannel">
+    <int:interceptors>
+        <int:wire-tap channel="logChannel"/>
+    </int:interceptors>
+</int:channel>

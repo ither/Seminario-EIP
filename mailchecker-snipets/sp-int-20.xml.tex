@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}logChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:logging\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}logChannel\PYZdq{}} \PY{n+na}{level=}\PY{l+s}{\PYZdq{}INFO\PYZdq{}} \PY{n+na}{log\PYZhy{}full\PYZhy{}message=}\PY{l+s}{\PYZdq{}true\PYZdq{}} 
+        \PY{n+na}{logger\PYZhy{}name=}\PY{l+s}{\PYZdq{}int\PYZhy{}logger\PYZhy{}aggregator\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+
+
+\PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}int:interceptors}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}int:wire\PYZhy{}tap} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}logChannel\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/int:interceptors\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/int:channel\PYZgt{}}
+\end{Verbatim}
