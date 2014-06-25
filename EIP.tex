@@ -1,5 +1,6 @@
 % !TeX spellcheck = es_ES
 % \documentclass[notes=onlyslideswithnotes]{beamer}
+%\documentclass[handout]{beamer}
 \documentclass{beamer}
 
 \usepackage[T1]{fontenc}
@@ -56,6 +57,7 @@ Gregor Hohpe \& Bobby Woolf - agosto 2004
 
 \begin{frame}{Soluciones}
 \includegraphics[width= 0.9\linewidth]{camel-spring}
+\note{Sp Integration es de nov 2007, Camel es de 2007 también}
 \end{frame}
 
 \begin{frame}{Componentes centrales}
@@ -85,7 +87,7 @@ Desarrollar un sistema que envíe mails a un grupo de casillas específicas usan
     \PY{k+kd}{private} \PY{k+kd}{final} \PY{n}{MessagingTemplate} \PY{n}{template} \PY{o}{=} \PY{k}{new} \PY{n}{MessagingTemplate}\PY{o}{(}\PY{o}{)}\PY{o}{;}
 
     \PY{n+nd}{@Autowired}
-    \PY{n}{MessageChannel} \PY{n}{sendChannel}\PY{o}{;}
+    \PY{n}{MessageChannel} \PY{n}{requestChannel}\PY{o}{;}
     \PY{o}{.}\PY{o}{.}\PY{o}{.}
     
     \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
@@ -95,7 +97,7 @@ Desarrollar un sistema que envíe mails a un grupo de casillas específicas usan
       \PY{o}{.}\PY{o}{.}\PY{o}{.}
       \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
               \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
-      \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}      
+      \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{requestChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}      
     \PY{o}{\PYZcb{}}
 \PY{o}{\PYZcb{}}
 \end{Verbatim}
@@ -107,7 +109,7 @@ Desarrollar un sistema que envíe mails a un grupo de casillas específicas usan
 \PY{n+nt}{\PYZlt{}int\PYZhy{}mail:outbound\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{mail\PYZhy{}sender=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 
 \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}customMailSender\PYZdq{}} 
-      \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}} \PY{n+na}{autowire\PYZhy{}candidate=}\PY{l+s}{\PYZdq{}false\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+      \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.mail.javamail.JavaMailSenderImpl\PYZdq{}} \PY{n+nt}{\PYZgt{}}
     \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}defaultEncoding\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}UTF\PYZhy{}8\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
     \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}javaMailProperties\PYZdq{}}\PY{n+nt}{\PYZgt{}}
         \PY{n+nt}{\PYZlt{}props}\PY{n+nt}{\PYZgt{}}
@@ -287,8 +289,8 @@ Para nuestra aplicación
          \PY{n}{template}\PY{o}{.}\PY{n+na}{send}\PY{o}{(}\PY{n}{sendChannel}\PY{o}{,} \PY{n}{mailMessage}\PY{o}{)}\PY{o}{;}
     \PY{o}{\PYZcb{}}
 \PY{o}{\PYZcb{}}
-
 \end{Verbatim}
+\note{No confundir los headers MIME con los de Integration}
 \end{frame}
 
 \begin{frame}[fragile]{Diseño (5) - Header enricher}
@@ -304,6 +306,7 @@ Para nuestra aplicación
         \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}payload.getHeader(\PYZsq{}X\PYZhy{}Mailchecker\PYZsq{})\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 \PY{n+nt}{\PYZlt{}/int:header\PYZhy{}enricher\PYZgt{}}
 \end{Verbatim}
+\note{Comentario sobre SpEL}
 \end{frame}
 
 \begin{frame}{Diseño}
@@ -386,7 +389,8 @@ Para ello, guardaremos el contenido como archivo.
 \end{frame}
 
 \begin{frame}{Diseño - Casos no felices}
-Para lograr esto, necesitamos indicarle al Aggregator que los mensajes que no forman grupo en un determinado tiempo deben descartarse.
+Para manejar estos casos, necesitamos indicarle al Aggregator que los mensajes que no forman grupo en un determinado tiempo deben descartarse.
+\note{No es la forma más prolija pero sirve para tocar un tema interesante}
 \end{frame}
 
 \begin{frame}[fragile]{Diseño - Aggregator (Message Store)}
@@ -401,6 +405,7 @@ Para lograr esto, necesitamos indicarle al Aggregator que los mensajes que no fo
 \item Se puede hacer un implementación propia
 \item Los \verb|MessageStore| tienen manera de purgar grupos de mensajes por timeout (\verb|MessageGroupStoreReaper|)
 \end{itemize}
+\note{En la version mas nueva es más fácil de indicar}
 \end{frame}
 
 \begin{frame}[fragile]{Aggregator - Message Store}
@@ -638,11 +643,12 @@ Algunos proveedores de servicio (en particular Hotmail) no permiten hacer \texti
 \end{frame}
 
 \begin{frame}[fragile]{Debug y logging: Log adapter}
+
+{\small XML}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}logChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
 \PY{n+nt}{\PYZlt{}int:logging\PYZhy{}channel\PYZhy{}adapter} \PY{n+na}{channel=}\PY{l+s}{\PYZdq{}logChannel\PYZdq{}} \PY{n+na}{level=}\PY{l+s}{\PYZdq{}INFO\PYZdq{}} \PY{n+na}{log\PYZhy{}full\PYZhy{}message=}\PY{l+s}{\PYZdq{}true\PYZdq{}} 
         \PY{n+na}{logger\PYZhy{}name=}\PY{l+s}{\PYZdq{}int\PYZhy{}logger\PYZhy{}aggregator\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
-
 
 \PY{n+nt}{\PYZlt{}int:channel} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}aggregatorChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
     \PY{n+nt}{\PYZlt{}int:interceptors}\PY{n+nt}{\PYZgt{}}
@@ -650,18 +656,26 @@ Algunos proveedores de servicio (en particular Hotmail) no permiten hacer \texti
     \PY{n+nt}{\PYZlt{}/int:interceptors\PYZgt{}}
 \PY{n+nt}{\PYZlt{}/int:channel\PYZgt{}}
 \end{Verbatim}
+
+{\small log}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+INFO [task\PYZhy{}scheduler\PYZhy{}4] \PYZhy{}\PYZhy{}\PYZhy{} int\PYZhy{}logger\PYZhy{}aggregator: [Payload=org.springframework.integration.mail.
+AbstractMailReceiver\PYZdl{}IntegrationMimeMessage@563da1dc][Headers=\PYZob{}timestamp=1403616633740,
+id=aa5d54ac\PYZhy{}f4f0\PYZhy{}6217\PYZhy{}32ce\PYZhy{}5ea5dbc706ad, mailchecker\PYZus{}id=nogroup\PYZhy{}1605819369,
+mailchecker\PYZus{}match\PYZus{}type=received\PYZcb{}]
+\end{Verbatim}
 \end{frame}
 
 \begin{frame}[fragile]{Debug y logging: Message history}
 \begin{center}
 Message history
 \end{center}
-En el XML
+{\small XML}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 \PY{n+nt}{\PYZlt{}int:message\PYZhy{}history}\PY{n+nt}{/\PYZgt{}}
 \end{Verbatim}
 
-En el log
+{\small log}
 \begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
 INFO [task\PYZhy{}scheduler\PYZhy{}4] \PYZhy{}\PYZhy{}\PYZhy{} int\PYZhy{}logger\PYZhy{}aggregator: [Payload=org.springframework.integration.mail.
 AbstractMailReceiver\PYZdl{}IntegrationMimeMessage@563da1dc][Headers=\PYZob{}timestamp=1403616633740, id=aa5d54ac\PYZhy{}f4f0\PYZhy{}6217\PYZhy{}32ce\PYZhy{}5ea5dbc706ad,
@@ -689,7 +703,7 @@ mailchecker\PYZus{}id=nogroup\PYZhy{}1605819369, mailchecker\PYZus{}match\PYZus{
 
 \begin{frame}{Excepciones y errores}
 \begin{center}
-Manejo de excepciones
+{\large Manejo de excepciones}
 \end{center}
 \begin{itemize}
 \item \textit{Thread} de invocación al framework
@@ -702,7 +716,7 @@ Manejo de excepciones
 \end{frame}
 
 \begin{frame}{Excepciones y errores}
-Dead letter channel
+{\large Dead letter channel}
 \begin{itemize}
 \item Si no se define explícitamente, se define un \textit{errorChannel} como publish-subscribe con un logger adapter suscrito
 \end{itemize}
@@ -713,6 +727,13 @@ Dead letter channel
 
 \begin{frame}[fragile]{Excepciones y errores}
 En ambos casos, la excepción se devuelve como \verb|o.s.i.MessagingException|. En particular, los mensajes no entregados se devuelven como \verb|o.s.i.MessageHandlingException|.
+\end{frame}
+
+\begin{frame}{Transacciones}
+\begin{itemize}
+\item Poca documentación y ejemplos
+\item Se puede manejar independientemente
+\end{itemize}
 \end{frame}
 
 
