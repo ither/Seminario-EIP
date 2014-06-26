@@ -1,0 +1,2 @@
+<int:gateway id="mailSender" service-interface="com.despegar.checkmail.integration.MailSender" 
+                                        default-request-channel="requestChannel" />

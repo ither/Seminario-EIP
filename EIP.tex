@@ -1,8 +1,10 @@
 % !TeX spellcheck = es_ES
 % \documentclass[notes=onlyslideswithnotes]{beamer}
-%\documentclass[handout]{beamer}
+% \documentclass[handout]{beamer}
 \documentclass{beamer}
 
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
@@ -15,6 +17,7 @@
   \usetheme{Warsaw}
   \setbeamercovered{transparent}
 }
+
 
 \title{Patrones de integración}
 \subtitle{Apache Camel y Spring Integration}
@@ -637,7 +640,6 @@ Algunos proveedores de servicio (en particular Hotmail) no permiten hacer \texti
 \item \textit{Debug} y \textit{logging}
 \item Manejo de excepciones y errores
 \item Transacciones
-\item Reintentos
 \item \textit{Gateways}
 \end{itemize}
 \end{frame}
@@ -716,6 +718,7 @@ mailchecker\PYZus{}id=nogroup\PYZhy{}1605819369, mailchecker\PYZus{}match\PYZus{
 \end{frame}
 
 \begin{frame}{Excepciones y errores}
+\par
 {\large Dead letter channel}
 \begin{itemize}
 \item Si no se define explícitamente, se define un \textit{errorChannel} como publish-subscribe con un logger adapter suscrito
@@ -732,11 +735,77 @@ En ambos casos, la excepción se devuelve como \verb|o.s.i.MessagingException|. 
 \begin{frame}{Transacciones}
 \begin{itemize}
 \item Poca documentación y ejemplos
-\item Se puede manejar independientemente
+\item Se puede manejar explícitamente
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Gateways}
+\par
+\begin{center}
+{\Large Gateways}
+\end{center}
+El propósito principal del Gateway es ocultar la implementación hecha con mensajes, simplificando la integración con el resto del sistema.
+\end{frame}
 
+\begin{frame}[fragile]{Gateways}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
+\PY{o}{\PYZob{}}
+    \PY{c+c1}{// ...}
+    \PY{n+nd}{@Autowired}
+    \PY{n}{MailSender} \PY{n}{mailSender}\PY{o}{;}
+    \PY{c+c1}{// ...}
+    
+    \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
+    \PY{o}{\PYZob{}}
+        \PY{k}{for} \PY{o}{(}\PY{n}{String} \PY{n}{mailAccount} \PY{o}{:} \PY{n}{mailRequest}\PY{o}{.}\PY{n+na}{getMailAccounts}\PY{o}{(}\PY{o}{)}\PY{o}{)}
+        \PY{o}{\PYZob{}}
+            \PY{c+c1}{// Arma el mail}
+            \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+            \PY{c+c1}{// ...}
+            \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{sendMail}\PY{o}{(}\PY{n}{reqId}\PY{o}{,} \PY{n}{smtpId}\PY{o}{,} \PY{n}{poller}\PY{o}{,} \PY{n}{mimeMessage}\PY{o}{)}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Gateways}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{interface} \PY{n+nc}{MailSender}
+\PY{o}{\PYZob{}}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{sendMail}\PY{o}{(}\PY{n}{String} \PY{n}{reqId}\PY{o}{,} \PY{n}{String} \PY{n}{sender}\PY{o}{,} \PY{n}{String} \PY{n}{poller}\PY{o}{,} \PY{n}{MimeMessage} \PY{n}{mimeMessage}\PY{o}{)}\PY{o}{;}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Gateways}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}int:gateway} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}mailSender\PYZdq{}} \PY{n+na}{service\PYZhy{}interface=}\PY{l+s}{\PYZdq{}com.despegar.checkmail.integration.MailSender\PYZdq{}} 
+                             \PY{n+na}{default\PYZhy{}request\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Gateways}
+\begin{Verbatim}[fontsize=\tiny,commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{interface} \PY{n+nc}{MailSender}
+\PY{o}{\PYZob{}}
+    \PY{n+nd}{@Gateway}\PY{o}{(}\PY{n}{requestChannel} \PY{o}{=} \PY{l+s}{\PYZdq{}requestChannel\PYZdq{}}\PY{o}{)}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{sendMail}\PY{o}{(}\PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{)} \PY{n}{String} \PY{n}{reqId}\PY{o}{,}
+            \PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{SENDER}\PY{o}{)} \PY{n}{String} \PY{n}{sender}\PY{o}{,}
+            \PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{POLLER}\PY{o}{)} \PY{n}{String} \PY{n}{poller}\PY{o}{,} \PY{n}{MimeMessage} \PY{n}{mimeMessage}\PY{o}{)}\PY{o}{;}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
+\end{frame}
+
+\begin{frame}{Temas que quedaron afuera}
+\begin{itemize}
+\item Framework de reintentos
+
+\end{itemize}
+\end{frame}
 
 \subsection{Subscriptions API v3}
 \begin{frame}
@@ -777,8 +846,6 @@ Desarrollar un caso de uso del sistema que reciba información sobre un grupo de
 \end{frame}
 
 \subsection{Consideraciones}
-\begin{frame}
-\end{frame}
 
 \begin{frame}
 \begin{center}
@@ -804,14 +871,28 @@ Desarrollar un caso de uso del sistema que reciba información sobre un grupo de
 % wiretap, gateway con java
 % retry framework
 % conclusiones: no es necesario usar una implementacion, se trata de aprender el lenguaje comun
+\begin{frame}
+\begin{table}
+\caption{Referencia de Endpoints}
+
+\end{table}
+\end{frame}
 
 \section{Cierre}
 \subsection{Palabras finales}
 
-\begin{frame}{Conclusiones}
+\begin{frame}{Preguntas}
 \begin{itemize}
-\item No es necesario usar una implementación
+\item ¿Se puede describir cualquier proceso con este modelo de mensajes?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+\begin{itemize}[<+->]
 \item Los patrones ayudan a tener un lenguaje en común
+\item Sirven para ordenar las ideas antes de empezar a programar
+\item No es necesario usar una implementación
+\item La invitación a leer los libros ``Spring Integration in action'' y ``Enterprise Integration Patterns'' 
 \end{itemize}
 \end{frame}
 

@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{interface} \PY{n+nc}{MailSender}
+\PY{o}{\PYZob{}}
+    \PY{n+nd}{@Gateway}\PY{o}{(}\PY{n}{requestChannel} \PY{o}{=} \PY{l+s}{\PYZdq{}requestChannel\PYZdq{}}\PY{o}{)}
+    \PY{k+kd}{public} \PY{k+kt}{void} \PY{n+nf}{sendMail}\PY{o}{(}\PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{REQUEST\PYZus{}ID}\PY{o}{)} \PY{n}{String} \PY{n}{reqId}\PY{o}{,}
+            \PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{SENDER}\PY{o}{)} \PY{n}{String} \PY{n}{sender}\PY{o}{,}
+            \PY{n+nd}{@Header}\PY{o}{(}\PY{n}{MailCheckerHeaders}\PY{o}{.}\PY{n+na}{POLLER}\PY{o}{)} \PY{n}{String} \PY{n}{poller}\PY{o}{,} \PY{n}{MimeMessage} \PY{n}{mimeMessage}\PY{o}{)}\PY{o}{;}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}

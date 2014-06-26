@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kd}{public} \PY{k+kd}{class} \PY{n+nc}{MailSenderController}
+\PY{o}{\PYZob{}}
+    \PY{c+c1}{// ...}
+    \PY{n+nd}{@Autowired}
+    \PY{n}{MailSender} \PY{n}{mailSender}\PY{o}{;}
+    \PY{c+c1}{// ...}
+    
+    \PY{k+kd}{private} \PY{k+kt}{long} \PY{n+nf}{processRequest}\PY{o}{(}\PY{n}{MailRequest} \PY{n}{req}\PY{o}{)}
+    \PY{o}{\PYZob{}}
+        \PY{k}{for} \PY{o}{(}\PY{n}{String} \PY{n}{mailAccount} \PY{o}{:} \PY{n}{mailRequest}\PY{o}{.}\PY{n+na}{getMailAccounts}\PY{o}{(}\PY{o}{)}\PY{o}{)}
+        \PY{o}{\PYZob{}}
+            \PY{c+c1}{// Arma el mail}
+            \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+            \PY{c+c1}{// ...}
+            \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{sendMail}\PY{o}{(}\PY{n}{reqId}\PY{o}{,} \PY{n}{smtpId}\PY{o}{,} \PY{n}{poller}\PY{o}{,} \PY{n}{mimeMessage}\PY{o}{)}\PY{o}{;}
+        \PY{o}{\PYZcb{}}
+    \PY{o}{\PYZcb{}}
+\PY{o}{\PYZcb{}}
+\end{Verbatim}
