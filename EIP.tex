@@ -800,13 +800,6 @@ El propósito principal del Gateway es ocultar la implementación hecha con mens
 \end{Verbatim}
 \end{frame}
 
-\begin{frame}{Temas que quedaron afuera}
-\begin{itemize}
-\item Framework de reintentos
-
-\end{itemize}
-\end{frame}
-
 \subsection{Subscriptions API v3}
 \begin{frame}
 \begin{center}
@@ -871,21 +864,29 @@ Desarrollar un caso de uso del sistema que reciba información sobre un grupo de
 % wiretap, gateway con java
 % retry framework
 % conclusiones: no es necesario usar una implementacion, se trata de aprender el lenguaje comun
-\begin{frame}
-\begin{table}
-\caption{Referencia de Endpoints}
+\begin{frame}[fragile]{Endpoints desarrollados}{Spring Integration}
+\begin{center}
+\begin{tabular}{c c c c}
+AMQP & File & FTP(S) & Gemfire \\
+HTTP & JDBC & JMS & JMX \\
+JPA & Mail & MongoDB & Redis \\
+TCP & UDP & Web serv & XMPP
+\end{tabular}
+\end{center}
+\end{frame}
 
-\end{table}
+\begin{frame}{Temas que quedaron afuera}
+\begin{itemize}
+\item Framework de reintentos
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tipos de patrones}
+\includegraphics[width=0.9\linewidth]{tiposPatrones}
 \end{frame}
 
 \section{Cierre}
 \subsection{Palabras finales}
-
-\begin{frame}{Preguntas}
-\begin{itemize}
-\item ¿Se puede describir cualquier proceso con este modelo de mensajes?
-\end{itemize}
-\end{frame}
 
 \begin{frame}{Conclusiones}
 \begin{itemize}[<+->]
@@ -912,6 +913,12 @@ Ejemplos \\
 \href{https://github.com/spring-projects/spring-integration-samples}{Ejemplos Sp Integration} \\
 \href{http://camel.apache.org/examples.html}{Ejemplos Apache Camel}
 \end{center}
+\end{frame}
+
+\begin{frame}{Preguntas}
+\begin{itemize}
+\item ¿Se puede describir cualquier proceso con este modelo de mensajes?
+\end{itemize}
 \end{frame}
 
 \begin{frame}{¡Gracias!}
