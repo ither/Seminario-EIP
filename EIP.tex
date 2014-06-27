@@ -729,8 +729,12 @@ mailchecker\PYZus{}id=nogroup\PYZhy{}1605819369, mailchecker\PYZus{}match\PYZus{
 \end{frame}
 
 \begin{frame}[fragile]{Excepciones y errores}
-En ambos casos, la excepción se devuelve como \verb|o.s.i.MessagingException|. En particular, los mensajes no entregados se devuelven como \verb|o.s.i.MessageHandlingException|.
+\begin{itemize}[<+->]
+\item En ambos casos, la excepción se devuelve como \verb|o.s.i.MessagingException|. En particular, los mensajes no entregados se devuelven como \verb|o.s.i.MessageHandlingException|.
+\item Framework de reintentos
+\end{itemize}
 \end{frame}
+
 
 \begin{frame}{Transacciones}
 \begin{itemize}
@@ -873,12 +877,6 @@ JPA & Mail & MongoDB & Redis \\
 TCP & UDP & Web serv & XMPP
 \end{tabular}
 \end{center}
-\end{frame}
-
-\begin{frame}{Temas que quedaron afuera}
-\begin{itemize}
-\item Framework de reintentos
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Tipos de patrones}
