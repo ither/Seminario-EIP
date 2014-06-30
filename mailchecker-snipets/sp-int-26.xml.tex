@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nt}{\PYZlt{}bean} \PY{n+na}{id=}\PY{l+s}{\PYZdq{}retryTemplate\PYZdq{}} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.retry.support.RetryTemplate\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}retryPolicy\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.retry.policy.SimpleRetryPolicy\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}maxAttempts\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}3\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/property\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}backOffPolicy\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}bean} \PY{n+na}{class=}\PY{l+s}{\PYZdq{}org.springframework.retry.backoff.ExponentialBackOffPolicy\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}initialInterval\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}5000\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}multiplier\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}2.0\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+            \PY{n+nt}{\PYZlt{}property} \PY{n+na}{name=}\PY{l+s}{\PYZdq{}maxInterval\PYZdq{}} \PY{n+na}{value=}\PY{l+s}{\PYZdq{}30000\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
+        \PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+    \PY{n+nt}{\PYZlt{}/property\PYZgt{}}
+\PY{n+nt}{\PYZlt{}/bean\PYZgt{}}
+\end{Verbatim}
