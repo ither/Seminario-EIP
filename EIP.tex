@@ -471,10 +471,9 @@ Para manejar estos casos, necesitamos indicarle al Aggregator que los mensajes q
 \end{frame}
 
 \begin{frame}{Diseño - Más de un SMTP}
-\begin{center}
-\Large{Cambio de requerimiento}
-\end{center}
+\begin{block}{Cambio de requerimiento}
 Ahora puede haber más de un servidor SMTP por el que quiera enviar los mails. El servidor elegido se indica en el formulario web.
+\end{block}
 \end{frame}
 
 \begin{frame}{Diseño - Más de un SMTP}
@@ -531,10 +530,9 @@ Ahora puede haber más de un servidor SMTP por el que quiera enviar los mails. E
 \end{frame}
 
 \begin{frame}{Diseño - Empezar / detener polling}
-\begin{center}
-\Large{Cambio de requerimiento}
-\end{center}
+\begin{block}{Cambio de requerimiento}
 El sistema debe empezar a hacer \textit{polling} solamente cuando envía mails y debe detenerse luego de unos minutos.
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]{Diseño - Empezar / detener polling}
@@ -606,7 +604,9 @@ El sistema debe empezar a hacer \textit{polling} solamente cuando envía mails y
 \end{frame}
 
 \begin{frame}{Diseño - Empezar / detener polling}
+\begin{block}{Problema}
 Algunos proveedores de servicio (en particular Hotmail) no permiten hacer \textit{polling} más seguido de 15min. Por lo que si se empieza a hacer \textit{polling} ni bien se hace el envío, no da la oportunidad de llegar al mail y tengo que esperar innecesariamente.
+\end{block}
 \end{frame}
 
 \begin{frame}{Diseño - Empezar / detener polling}
