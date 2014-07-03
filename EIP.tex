@@ -2,7 +2,7 @@
 % \documentclass[notes=onlyslideswithnotes]{beamer}
 % \documentclass[handout]{beamer}
 \documentclass{beamer}
-
+%\setbeameroption{show notes}
 %\usepackage{pgfpages}
 %\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
 \usepackage[T1]{fontenc}
@@ -21,7 +21,7 @@
 
 \title{Patrones de integración}
 \subtitle{Apache Camel y Spring Integration}
-\author[Despegar.com]{Pablo Rochás\\ \texttt{pablo.e.rochas@gmail.com}}
+\author[Despegar.com]{Pablo Rochás\\ \texttt{prochas@despegar.com}}
 \date[Despegar]{Julio 2014}
 
 % \setbeameroption{show only notes}
@@ -96,6 +96,8 @@ Desarrollar un sistema que envíe mails a un grupo de casillas específicas usan
     \PY{o}{\PYZob{}}
       \PY{c+c1}{// Arma el mail}
       \PY{k+kd}{final} \PY{n}{MimeMessage} \PY{n}{mimeMessage} \PY{o}{=} \PY{n}{mailSender}\PY{o}{.}\PY{n+na}{createMimeMessage}\PY{o}{(}\PY{o}{)}\PY{o}{;}
+      \PY{o}{.}\PY{o}{.}\PY{o}{.}
+      \PY{n}{mimeMessage}\PY{o}{.}\PY{n+na}{setHeader}\PY{o}{(}\PY{l+s}{\PYZdq{}X\PYZhy{}Mailchecker\PYZdq{}}\PY{o}{,} \PY{n}{reqId}\PY{o}{)}\PY{o}{;}
       \PY{o}{.}\PY{o}{.}\PY{o}{.}
       \PY{n}{Message}\PY{o}{\PYZlt{}}\PY{n}{MimeMessage}\PY{o}{\PYZgt{}} \PY{n}{mailMessage} \PY{o}{=} \PY{n}{MessageBuilder}\PY{o}{.}\PY{n+na}{withPayload}\PY{o}{(}\PY{n}{mimeMessage}\PY{o}{)}
               \PY{o}{.}\PY{n+na}{build}\PY{o}{(}\PY{o}{)}\PY{o}{;}
@@ -312,8 +314,6 @@ Para nuestra aplicación
 \end{frame}
 
 \begin{frame}{Diseño}
-Se debe modificar el código Java del Aggregator para manejar los \textit{headers}. \pause
-
 Con esto hecho, ya podemos distinguir el mail que llega para analizarlo.
 Para ello, guardaremos el contenido como archivo.
 \end{frame}
@@ -592,7 +592,7 @@ El sistema debe empezar a hacer \textit{polling} solamente cuando envía mails y
 \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}
                  \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.start()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 
-\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlBusChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
+\PY{n+nt}{\PYZlt{}int:chain} \PY{n+na}{input\PYZhy{}channel=}\PY{l+s}{\PYZdq{}requestChannel\PYZdq{}} \PY{n+na}{output\PYZhy{}channel=}\PY{l+s}{\PYZdq{}controlChannel\PYZdq{}}\PY{n+nt}{\PYZgt{}}
     \PY{n+nt}{\PYZlt{}int:delayer} \PY{n+na}{default\PYZhy{}delay=}\PY{l+s}{\PYZdq{}\PYZdl{}\PYZob{}pollers.stop.delay\PYZcb{}\PYZdq{}} \PY{n+nt}{/\PYZgt{}}
     \PY{n+nt}{\PYZlt{}int:transformer} \PY{n+na}{expression=}\PY{l+s}{\PYZdq{}\PYZsq{}@\PYZsq{} + headers[\PYZsq{}mailchecker\PYZus{}poller\PYZsq{}] + \PYZsq{}.stop()\PYZsq{}\PYZdq{}}\PY{n+nt}{/\PYZgt{}}
 \PY{n+nt}{\PYZlt{}/int:chain\PYZgt{}}
